@@ -1,7 +1,7 @@
 {
   "name": "nodebb-plugin-sso-altizure",
-  "version": "0.0.2",
-  "description": "NodeBB OverPro OAuth SSO",
+  "version": "0.0.4",
+  "description": "NodeBB Altizure OAuth SSO",
   "main": "library.js",
   "repository": {
     "type": "git",

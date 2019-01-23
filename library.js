@@ -113,11 +113,19 @@
 				});
 			}));
 
+			// strategies.push({
+			// 	name: constants.name,
+			// 	// url: 'https://api.altizure.com/auth/start',
+			// 	url: '/auth/' + constants.name,
+			// 	// callbackURL: '/auth/' + constants.name + '/callback',
+			// 	callbackURL: 'http://localhost:4567',
+			// 	icon: 'fa-check-square',
+			// 	scope: (constants.scope || '').split(',')
+			// });
 			strategies.push({
 				name: constants.name,
-				url: 'https://api.altizure.com/auth/start',
-				// callbackURL: '/auth/' + constants.name + '/callback',
-				callbackURL: 'http://localhost:4567',
+				url: '/auth/' + constants.name,
+				callbackURL: '/auth/' + constants.name + '/callback',
 				icon: 'fa-check-square',
 				scope: (constants.scope || '').split(',')
 			});
