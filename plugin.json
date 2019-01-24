@@ -1,8 +1,8 @@
 {
-	"id": "nodebb-plugin-sso-oauth",
-	"name": "NodeBB OAuth SSO",
+	"id": "nodebb-plugin-sso-altizure",
+	"name": "NodeBB Altizure OAuth SSO",
 	"description": "NodeBB Plugin that allows users to login/register via any configured OAuth provider.",
-	"url": "https://github.com/julianlam/nodebb-plugin-sso-oauth",
+	"url": "https://github.com/hao1994622/nodebb-plugin-sso-altizure",
 	"library": "./library.js",
 	"hooks": [
 		{ "hook": "static:user.delete", "method": "deleteUserData" },

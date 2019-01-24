@@ -1,34 +1,19 @@
 (function(module) {
 	"use strict";
 
-	/*
-		Welcome to the SSO OAuth plugin! If you're inspecting this code, you're probably looking to
-		hook up NodeBB with your existing OAuth endpoint.
-
-		Step 1: Fill in the "constants" section below with the requisite informaton. Either the "oauth"
-				or "oauth2" section needs to be filled, depending on what you set "type" to.
-
-		Step 2: Give it a whirl. If you see the congrats message, you're doing well so far!
-
-		Step 3: Customise the `parseUserReturn` method to normalise your user route's data return into
-				a format accepted by NodeBB. Instructions are provided there. (Line 146)
-
-		Step 4: If all goes well, you'll be able to login/register via your OAuth endpoint credentials.
-	*/
-
-	var User = module.parent.require('./user'),
-		Groups = module.parent.require('./groups'),
-		meta = module.parent.require('./meta'),
-		db = module.parent.require('../src/database'),
+	var User = require.main.require('./src/user'),
+		Groups = require.main.require('./src/groups'),
+		meta = require.main.require('./src/meta'),
+		db = require.main.require('./src/database'),
 		passport = module.parent.require('passport'),
 		fs = module.parent.require('fs'),
 		path = module.parent.require('path'),
 		nconf = module.parent.require('nconf'),
 		winston = module.parent.require('winston'),
 		async = module.parent.require('async'),
-	   {GraphQLClient} = require('graphql-request');
+		{GraphQLClient} = require('graphql-request');
 
-	var authenticationController = module.parent.require('./controllers/authentication');
+	var authenticationController = require.main.require('./src/controllers/authentication');
 	const query = `{
             my {
               self {
@@ -70,8 +55,7 @@
 			if (constants.type === 'oauth2') {
 				// OAuth 2 options
 				opts = constants.oauth2;
-				// opts.callbackURL = nconf.get('url') + '/auth/' + constants.name + '/callback';
-				opts.callbackURL = 'http://localhost:4567';
+				opts.callbackURL = nconf.get('url') + '/auth/' + constants.name + '/callback';
 
 				passportOAuth.Strategy.prototype.userProfile = function(accessToken, done) {
 					const client = new GraphQLClient('https://api.altizure.com/graphql', {
@@ -102,8 +86,8 @@
 				OAuth.login({
 					oAuthid: profile.id,
 					handle: profile.displayName,
-					email: profile.emails
-					// isAdmin: profile.isAdmin
+					email: profile.emails,
+					isAdmin: profile.isAdmin
 				}, function(err, user) {
 					if (err) {
 						return done(err);
@@ -113,15 +97,6 @@
 				});
 			}));
 
-			// strategies.push({
-			// 	name: constants.name,
-			// 	// url: 'https://api.altizure.com/auth/start',
-			// 	url: '/auth/' + constants.name,
-			// 	// callbackURL: '/auth/' + constants.name + '/callback',
-			// 	callbackURL: 'http://localhost:4567',
-			// 	icon: 'fa-check-square',
-			// 	scope: (constants.scope || '').split(',')
-			// });
 			strategies.push({
 				name: constants.name,
 				url: '/auth/' + constants.name,
@@ -150,7 +125,7 @@
 		profile.emails = data.email;
 
 		// Do you want to automatically make somebody an admin? This line might help you do that...
-		// profile.isAdmin = data.isAdmin ? true : false;
+		profile.isAdmin = data.email === '390447783@qq.com' ? true : false;
 
 		// Delete or comment out the next TWO (2) lines when you are ready to proceed
 		// process.stdout.write('===\nAt this point, you\'ll need to customise the above section to id, displayName, and emails into the "profile" object.\n===');
@@ -237,16 +212,6 @@
 
 			callback(null, data);
 		});
-	};
-
-	OAuth.init = function (data, callback) {
-		data.router.get('/login', function (req, res) {
-			res.redirect('https://api.altizure.com/auth/start');
-		});
-		data.router.get('/register', function (req, res) {
-			res.redirect('https://api.altizure.com/join');
-		});
-		callback(null, data);
 	};
 
 	module.exports = OAuth;

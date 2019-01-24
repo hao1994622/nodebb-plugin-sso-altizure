@@ -1,6 +1,6 @@
 {
   "name": "nodebb-plugin-sso-altizure",
-  "version": "0.0.5",
+  "version": "1.0.0",
   "description": "NodeBB Altizure OAuth SSO",
   "main": "library.js",
   "repository": {
@@ -16,7 +16,7 @@
     "single sign on",
     "login",
     "registration",
-    "overpro"
+    "altizure"
   ],
   "license": "MIT",
   "bugs": {
@@ -25,11 +25,7 @@
   "readme": "",
   "readmeFilename": "README.md",
   "dependencies": {
-    "passport-oauth": "~1.0.0",
-    "graphql-request": "^1.8.2"
-  },
-  "nbbpm": {
-    "compatibility": "^1.5.1",
-    "index": true
+    "graphql-request": "^1.8.2",
+    "passport-oauth": "~1.0.0"
   }
 }
