@@ -27,5 +27,9 @@
   "dependencies": {
     "graphql-request": "^1.8.2",
     "passport-oauth": "~1.0.0"
+  },
+  "nbbpm": {
+    "compatibility": "^1.5.1",
+    "index": true
   }
 }
